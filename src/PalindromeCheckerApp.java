@@ -2,60 +2,14 @@ import java.util.Scanner;
 
 public class PalindromeCheckerApp {
 
-    static class Node {
-        char data;
-        Node next;
-
-        Node(char data) {
-            this.data = data;
-        }
-    }
-
-    static Node head = null;
-
-    static void append(char ch) {
-        Node newNode = new Node(ch);
-        if (head == null) {
-            head = newNode;
-            return;
-        }
-        Node temp = head;
-        while (temp.next != null) {
-            temp = temp.next;
-        }
-        temp.next = newNode;
-    }
-
-    static boolean isPalindrome() {
-        if (head == null || head.next == null)
+    static boolean isPalindrome(String str, int start, int end) {
+        if (start >= end)
             return true;
 
-        Node slow = head, fast = head;
+        if (str.charAt(start) != str.charAt(end))
+            return false;
 
-        while (fast != null && fast.next != null) {
-            slow = slow.next;
-            fast = fast.next.next;
-        }
-
-        Node prev = null, curr = slow, next;
-
-        while (curr != null) {
-            next = curr.next;
-            curr.next = prev;
-            prev = curr;
-            curr = next;
-        }
-
-        Node first = head, second = prev;
-
-        while (second != null) {
-            if (first.data != second.data)
-                return false;
-            first = first.next;
-            second = second.next;
-        }
-
-        return true;
+        return isPalindrome(str, start + 1, end - 1);
     }
 
     public static void main(String[] args) {
@@ -63,13 +17,7 @@ public class PalindromeCheckerApp {
         System.out.print("Enter a string: ");
         String str = sc.nextLine();
 
-        head = null;
-
-        for (int i = 0; i < str.length(); i++) {
-            append(str.charAt(i));
-        }
-
-        if (isPalindrome())
+        if (isPalindrome(str, 0, str.length() - 1))
             System.out.println(str + " is a palindrome.");
         else
             System.out.println(str + " is not a palindrome.");
