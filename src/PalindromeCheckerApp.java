@@ -2,57 +2,17 @@ import java.util.Scanner;
 
 public class PalindromeCheckerApp {
 
-    static class Node {
-        char data;
-        Node next;
+    static boolean isPalindrome(String str) {
+        str = str.toLowerCase().replaceAll("\\s+", "");
 
-        Node(char data) {
-            this.data = data;
-        }
-    }
+        int start = 0;
+        int end = str.length() - 1;
 
-    static Node head = null;
-
-    static void append(char ch) {
-        Node newNode = new Node(ch);
-        if (head == null) {
-            head = newNode;
-            return;
-        }
-        Node temp = head;
-        while (temp.next != null) {
-            temp = temp.next;
-        }
-        temp.next = newNode;
-    }
-
-    static boolean isPalindrome() {
-        if (head == null || head.next == null)
-            return true;
-
-        Node slow = head, fast = head;
-
-        while (fast != null && fast.next != null) {
-            slow = slow.next;
-            fast = fast.next.next;
-        }
-
-        Node prev = null, curr = slow, next;
-
-        while (curr != null) {
-            next = curr.next;
-            curr.next = prev;
-            prev = curr;
-            curr = next;
-        }
-
-        Node first = head, second = prev;
-
-        while (second != null) {
-            if (first.data != second.data)
+        while (start < end) {
+            if (str.charAt(start) != str.charAt(end))
                 return false;
-            first = first.next;
-            second = second.next;
+            start++;
+            end--;
         }
 
         return true;
@@ -61,18 +21,12 @@ public class PalindromeCheckerApp {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         System.out.print("Enter a string: ");
-        String str = sc.nextLine();
+        String input = sc.nextLine();
 
-        head = null;
-
-        for (int i = 0; i < str.length(); i++) {
-            append(str.charAt(i));
-        }
-
-        if (isPalindrome())
-            System.out.println(str + " is a palindrome.");
+        if (isPalindrome(input))
+            System.out.println("Palindrome");
         else
-            System.out.println(str + " is not a palindrome.");
+            System.out.println("Not a palindrome");
 
         sc.close();
     }
