@@ -12,7 +12,7 @@ public class PalindromeCheckerApp {
             deque.addLast(str.charAt(i));
         }
 
-        boolean isPalindrome = true;
+        boolean isPalindrome = true;git remote -v
 
         while (deque.size() > 1) {
             if (deque.removeFirst() != deque.removeLast()) {
